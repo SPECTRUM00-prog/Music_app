@@ -1,6 +1,7 @@
 package com.example.music_app
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
+        val tvTitulo = findViewById<TextView>(R.id.tvTitulo)
 
     }
 }
