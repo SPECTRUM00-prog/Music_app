@@ -11,8 +11,8 @@
         android:id="@+id/imgFondo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/pink_gradient_lines"
         android:scaleType="centerCrop"
+        android:src="@drawable/pink_gradient_lines"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,6 +53,7 @@
                 android:id="@+id/etNombre"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_input"
                 android:drawableStart="@drawable/round_person_24"
                 android:drawablePadding="10dp"
@@ -60,7 +61,6 @@
                 android:inputType="textEmailAddress"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:layout_marginBottom="15dp"
                 android:textColor="#333333"
                 android:textColorHint="#ffbeab" />
 
