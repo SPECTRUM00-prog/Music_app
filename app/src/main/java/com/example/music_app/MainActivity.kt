@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         //Evento para iniciar sesion
         btnInicio.setOnClickListener {
             //TODO: Agregar metodo de incio de sesion
+            iniciarSesion()
 
         }
 
@@ -61,6 +62,11 @@ class MainActivity : AppCompatActivity() {
         if (resultado) {
             //Si la sesion es correcta
             Toast.makeText(this, "Bienvenido :D", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            //Cerrar la pantalla actual
+            finish()
         } else {
             //Si la sesion es incorrecta
             Toast.makeText(this, "Datos incorrectos", Toast.LENGTH_SHORT).show()
