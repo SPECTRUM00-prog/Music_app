@@ -31,7 +31,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
                 $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COL_NOMBRE TEXT NOT NULL,
                 $COL_CORREO TEXT NOT NULL UNIQUE,
-                $COLUMN_PASSWORD TEXT NOT NULL
+                $COL_PASSWORD TEXT NOT NULL
             )
         """.trimIndent()
 
@@ -55,7 +55,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         val datos = ContentValues().apply {
             put(COL_NOMBRE, nombre)
             put(COL_CORREO, correo)
-            put(COLUMN_PASSWORD, password)
+            put(COL_PASSWORD, password)
         }
 
         //Insertar datos en la tabla
@@ -84,7 +84,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
 
         //Crear cursor para recorrer la informacion
         val cursor = db.rawQuery(
-            query_sql,arrayOf(correo)
+            query_sql,arrayOf(correo, password)
         )
 
         //Crear variable de tipo boolean que permita saber si el cursor encontro un registro

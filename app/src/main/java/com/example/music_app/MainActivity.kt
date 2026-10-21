@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         if (resultado) {
             //Si la sesion es correcta
             Toast.makeText(this, "Bienvenido :D", Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             //Cerrar la pantalla actual
