@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.music_app.model.ITunesResponse
 import com.example.music_app.network.RetrofitClient
 import retrofit2.Call
@@ -27,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
         tvResultado = findViewById(R.id.tvResultado)
         imgAlbum = findViewById(R.id.imgAlbum)
 
+        obtenerAlbum()
     }
 
     //Metodo para cargar los albumes
@@ -48,6 +50,25 @@ class HomeActivity : AppCompatActivity() {
             ) {
                 //Variable que obtenega los resultados de la API
                 val albumes = response.body()?.results
+
+                if (albumes.isNullOrEmpty()) {
+                    //Variable que guarde la informacion de cada respuesta obtenida de la API
+                    val album = albumes[0]
+
+                    //Mostrar informacion del API en un TextView
+                    tvResultado.text =
+                        "Nombre del album: ${album.collectionName} \n \n" + "Artista: ${album.artistName}"
+
+                    //Mostrar imagen desde el API
+                    Glide.with(this@HomeActivity)
+                        .load(album.obtenerImagenGrande())
+                        .into(imgAlbum)
+                } else {
+                    Toast.makeText(this@HomeActivity, "No hay resultados", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+
             }
 
             //Metodo para verificar si no hay respuesta
