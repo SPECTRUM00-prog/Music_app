@@ -35,11 +35,11 @@ class HomeActivity : AppCompatActivity() {
     private fun obtenerAlbum() {
 
         RetrofitClient.api.obtenerAlbumGenero(
-            genero = "Alternative",
-            pais = "MX",
+            genero = "Pop",
+            pais = "US",
             media = "music",
             entidad = "album",
-            limite = 10,
+            limite = 1,
         ).enqueue(object : Callback<ITunesResponse?> {
 
             //Metodos obligatorios para el funcionamiento
@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
                 //Variable que obtenega los resultados de la API
                 val albumes = response.body()?.results
 
-                if (albumes.isNullOrEmpty()) {
+                if (!albumes.isNullOrEmpty()) {
                     //Variable que guarde la informacion de cada respuesta obtenida de la API
                     val album = albumes[0]
 
