@@ -46,15 +46,16 @@ class HomeActivity : AppCompatActivity() {
                 call: Call<ITunesResponse?>,
                 response: Response<ITunesResponse?>
             ) {
-                TODO("Not yet implemented")
+                //Variable que obtenega los resultados de la API
+                val albumes = response.body()?.results
             }
 
             //Metodo para verificar si no hay respuesta
             override fun onFailure(call: Call<ITunesResponse?>, t: Throwable) {
                 Toast.makeText(this@HomeActivity, "Error en el API", Toast.LENGTH_SHORT).show()
-                TODO("Not yet implemented")
             }
-        })
+        }
+        )
 
     }
 
