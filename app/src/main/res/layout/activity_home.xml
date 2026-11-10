@@ -31,6 +31,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroPop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,6 +56,7 @@
             </HorizontalScrollView>
 
             <TextView
+                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroRock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,6 +81,7 @@
             </HorizontalScrollView>
 
             <TextView
+                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroIndie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

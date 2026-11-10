@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="155dp"
     android:layout_height="wrap_content"
+    android:layout_marginRight="15dp"
     android:orientation="vertical">
 
     <!--Contenido de las tarjetas para los albumes-->
