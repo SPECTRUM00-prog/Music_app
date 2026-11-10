@@ -2,6 +2,7 @@ package com.example.music_app
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.music_app.model.Album
 import com.example.music_app.model.ITunesResponse
 import com.example.music_app.network.RetrofitClient
 import retrofit2.Call
@@ -17,16 +19,18 @@ import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var tvResultado: TextView
-    private lateinit var imgAlbum: ImageView
+    private lateinit var tvEstado: TextView
+
+    private lateinit var contenedorIndie: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
 
-        tvResultado = findViewById(R.id.tvResultado)
-        imgAlbum = findViewById(R.id.imgAlbum)
+        tvEstado = findViewById(R.id.tvEstado)
+
+        contenedorIndie = findViewById(R.id.contenedorIndie)
 
         obtenerAlbum()
     }
@@ -39,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
             pais = "US",
             media = "music",
             entidad = "album",
-            limite = 1,
+            limite = 10,
         ).enqueue(object : Callback<ITunesResponse?> {
 
             //Metodos obligatorios para el funcionamiento
@@ -77,6 +81,25 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         )
+
+    }
+
+    //Metodo para mostrar un listado de albumes
+
+    private fun mostrarAlbumes(albumes: List<Album>) {
+
+        //Evitar resultados duplicados
+        contenedorIndie.removeAllViews()
+
+        //Ciclo para recorrer la informacion de la respuesta del API
+        for (album in albumes) {
+            //Indicar la vista en la que se va a mostrar la informacion
+            // (item_album)
+
+            val vistaAlbum = layoutInflater.inflate(R.layout.item_album,contenedorIndie, false)
+
+
+        }
 
     }
 

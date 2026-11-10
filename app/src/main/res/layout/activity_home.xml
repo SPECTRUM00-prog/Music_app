@@ -21,20 +21,86 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvResultado"
+                android:id="@+id/tvEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Cargando"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvGeneroPop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cargando prueba de API"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
+                android:text="Pop"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imgAlbum"
-                android:layout_width="240dp"
-                android:layout_height="240dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:scaleType="centerCrop"/>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:clipToPadding="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contenedorPop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvGeneroRock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rock"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:clipToPadding="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contenedorRock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvGeneroIndie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Indie"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:clipToPadding="false"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contenedorIndie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
         </LinearLayout>
 
