@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
         obtenerAlbum("rock", contenedorRock)
     }
 
-    //Metodo para cargar los albumes segun el genero y contenedor
+    //Metodo para poder cargar los albumes segun el genero y contenedor
     private fun obtenerAlbum(genero: String, contenedor: LinearLayout) {
         RetrofitClient.api.obtenerAlbumGenero(
             genero = genero, // Corregido: toma el genero que le pasas
