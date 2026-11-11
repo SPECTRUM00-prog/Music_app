@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false # OBLIGATORIO para permitir empujar a otro repositorio
+          persist-credentials: false
 
       - name: Aplicar configuraciones de Panda (Gradle 8.11.1 y AGP 8.9.0)
         run: |
@@ -33,4 +33,4 @@ jobs:
 
       - name: Enviar codigo actualizado a Music_app_panda
         run: |
-          git push --force https://${{ secrets.SYNC_TOKEN }}@github.com/SPECTRUM00-prog/Music_app_panda.git HEAD:main
+          git push --force https://SPECTRUM00-prog:${{ secrets.SYNC_TOKEN }}@github.com/SPECTRUM00-prog/Music_app_panda.git HEAD:main
