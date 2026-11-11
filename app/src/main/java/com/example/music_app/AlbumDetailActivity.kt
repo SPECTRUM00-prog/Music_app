@@ -29,7 +29,7 @@ class AlbumDetailActivity : AppCompatActivity() {
 
         imgPortadaDetalle = findViewById(R.id.imgPortadaDetalle)
         tvNombreAlbumDetalle = findViewById(R.id.tvNombreAlbumDetalle)
-        tvArtistaAlbum = findViewById(R.id.tvNombreArtista)
+        tvArtistaAlbum = findViewById(R.id.tvArtistaAlbumDetalle)
         tvAlbumDetalle = findViewById(R.id.tvAlbumDetalle)
         btnFavorito = findViewById(R.id.btnFavorito)
 
