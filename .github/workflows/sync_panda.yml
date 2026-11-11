@@ -1,0 +1,35 @@
+name: Sincronizar con Music_app_panda
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Permite ejecutar la sincronización manualmente si se desea
+
+jobs:
+  sincronizar_panda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo de Music_app
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar configuraciones de Panda (Gradle 8.11.1 y AGP 8.9.0)
+        run: |
+          # 1. Cambiar la versión de Gradle en gradle-wrapper.properties a 8.11.1
+          sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-bin.zip|' gradle/wrapper/gradle-wrapper.properties
+
+          # 2. Cambiar la versión del AGP en libs.versions.toml a 8.9.0
+          sed -i 's|agp = "[^"]*"|agp = "8.9.0"|' gradle/libs.versions.toml
+
+      - name: Guardar cambios locales
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add gradle/wrapper/gradle-wrapper.properties gradle/libs.versions.toml
+          git commit -m "Auto-sync: Ajuste a Gradle 8.11.1 y AGP 8.9.0 (Panda)" || echo "Sin cambios pendientes"
+
+      - name: Enviar codigo actualizado a Music_app_panda
+        run: |
+          git push --force https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/SPECTRUM00-prog/Music_app_panda.git HEAD:main
