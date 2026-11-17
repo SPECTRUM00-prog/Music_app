@@ -140,7 +140,12 @@ class MainActivity : AppCompatActivity() {
                     credential.data
                 )
 
+                autenticarFirebase(credencialGoogle.idToken)
+
             } catch (e: GoogleIdTokenParsingException) {
+
+                Toast.makeText(this, "Credencial Invalida", Toast.LENGTH_SHORT).show()
+
 
             }
         }
