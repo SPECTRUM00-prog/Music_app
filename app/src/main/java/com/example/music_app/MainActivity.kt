@@ -165,6 +165,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
 
+                //Validar que el resultado del inicio de sesion sea correto
+                val resultado = credentialManager.getCredential(
+                    context = this@MainActivity,
+                    request = solicitud
+                )
+
             } catch (e: GetCredentialException) {
 
             }
