@@ -150,4 +150,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    // 5. MÉTODO PARA INICIAR SESIÓN
+    private fun iniciarSesionGoogle() {
+
+        val inicioGoogle = GetSignInWithGoogleOption.Builder(
+            getString(R.string.default_web_client_id)
+        ).build()
+
+        val solicitud = GetCredentialRequest.Builder()
+            .addCredentialOption(inicioGoogle)
+            .build()
+
+        lifecycleScope.launch {
+            try {
+
+            } catch (e: GetCredentialException) {
+
+            }
+        }
+
+    }
+
 }
