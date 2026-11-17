@@ -64,6 +64,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        btnGoogle.setOnClickListener {
+            iniciarSesionGoogle()
+        }
+
         tvCrearCuenta.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
@@ -171,7 +175,10 @@ class MainActivity : AppCompatActivity() {
                     request = solicitud
                 )
 
+                procesarCredencial(resultado.credential)
+
             } catch (e: GetCredentialException) {
+                Toast.makeText(this@MainActivity, "Error al inciar sesion", Toast.LENGTH_SHORT).show()
 
             }
         }
