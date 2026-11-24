@@ -50,12 +50,12 @@ class AlbumDetailActivity : AppCompatActivity() {
     //Metodo para obtener toda la información
     private fun mosntrarInformacionAlbum() {
 
-        val idAlbum = intent.getLongExtra("ID_ALBUM", 1)
+        val idAlbum = intent.getLongExtra("ID_ALBUM", -1L)
         val nombreAlbum = intent.getStringExtra("NOMBRE_ALBUM") ?: "Album Desconocido"
         val artista = intent.getStringExtra("ARTISTA_ALBUM") ?: "Artista Desconocido"
         val genero = intent.getStringExtra("GENERO_ALBUM") ?: "Genero Desconocido"
         val numeroCanciones = intent.getIntExtra("CANCIONES_ALBUM", 0)
-        val fecha = intent.getStringExtra("FECHA_ALBYM") ?: "Sin Fecha"
+        val fecha = intent.getStringExtra("FECHA_ALBUM") ?: "Sin Fecha"
         val imagen = intent.getStringExtra("IMAGEN_ALBUM") ?: " "
 
         tvNombreAlbumDetalle.text = nombreAlbum

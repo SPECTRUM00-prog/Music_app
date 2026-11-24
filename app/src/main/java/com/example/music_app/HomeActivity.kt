@@ -119,8 +119,7 @@ class HomeActivity : AppCompatActivity() {
             vistaAlbum.setOnClickListener {
 
                 //Variable para verificar si el album tiene ID
-                val idAlbum = album.collectionName
-
+                val idAlbum = album.collectionId
                 if (idAlbum != null) {
                     val intent = Intent(this@HomeActivity, AlbumDetailActivity::class.java)
 
