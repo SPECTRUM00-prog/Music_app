@@ -19,6 +19,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <TextView
+                android:id="@+id/tvGeneroPop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Favoritos"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:text="No tienes ningun album en favoritos"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <!--Uso del Grid Layout-->
+            <GridLayout
+                android:id="@+id/GridFavoritos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alignmentMode="alignMargins"
+                android:columnCount="3"
+                android:useDefaultMargins="false"
+                android:layout_marginTop="20dp">
+            </GridLayout>
+        </LinearLayout>
+
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
