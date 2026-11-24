@@ -6,14 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#101818"
-    android:padding="24dp"
+    android:padding="5dp"
     tools:context=".HomeActivity">
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#101818"
-        android:padding="20dp">
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,10 +35,10 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroPop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Pop"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -56,10 +60,10 @@
             </HorizontalScrollView>
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroRock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Rock"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -81,10 +85,10 @@
             </HorizontalScrollView>
 
             <TextView
-                android:layout_marginTop="20dp"
                 android:id="@+id/tvGeneroIndie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Indie"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -108,5 +112,18 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#101818"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

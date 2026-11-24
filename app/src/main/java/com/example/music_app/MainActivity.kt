@@ -162,28 +162,27 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.default_web_client_id)
         ).build()
 
-        val solicitud = GetCredentialRequest.Builder()
-            .addCredentialOption(inicioGoogle)
-            .build()
+        val solicitud = GetCredentialRequest.Builder().addCredentialOption(inicioGoogle).build()
 
         lifecycleScope.launch {
             try {
 
                 //Validar que el resultado del inicio de sesion sea correto
                 val resultado = credentialManager.getCredential(
-                    context = this@MainActivity,
-                    request = solicitud
+                    context = this@MainActivity, request = solicitud
                 )
 
                 procesarCredencial(resultado.credential)
 
             } catch (e: GetCredentialException) {
-                Toast.makeText(this@MainActivity, "Error al inciar sesion", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Error al inciar sesion", Toast.LENGTH_SHORT)
+                    .show()
 
             }
         }
 
     }
+
     //Metodo para mantener la sesion activa
     override fun onStart() {
         super.onStart()
@@ -192,12 +191,11 @@ class MainActivity : AppCompatActivity() {
         val usuarioActual = auth.currentUser
 
         //Validar que el usuario sea diferente nulo
-        if (usuarioActual != null){
+        if (usuarioActual != null) {
             val intent = Intent(this, HomeActivity::class.java)
 
             startActivity(intent)
             finish()
         }
     }
-
 }

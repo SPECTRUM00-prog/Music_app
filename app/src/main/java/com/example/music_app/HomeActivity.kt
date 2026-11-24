@@ -9,10 +9,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.credentials.CredentialManager
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.music_app.model.Album
 import com.example.music_app.model.ITunesResponse
 import com.example.music_app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +29,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var contenedorPop: LinearLayout
     private lateinit var contenedorRock: LinearLayout
     private lateinit var contenedorIndie: LinearLayout
+    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var auth: FirebaseAuth
+    private lateinit var credentialManager: CredentialManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +43,16 @@ class HomeActivity : AppCompatActivity() {
         contenedorPop = findViewById(R.id.contenedorPop)
         contenedorRock = findViewById(R.id.contenedorRock)
         contenedorIndie = findViewById(R.id.contenedorIndie)
-
+        bottomNavigation = findViewById(R.id.bottomNavigation)
+        auth = FirebaseAuth.getInstance()
+        credentialManager = CredentialManager.create(this)
         //Llamar a los metodos para cargar cada categoria
         obtenerAlbum("indie", contenedorIndie)
         obtenerAlbum("pop", contenedorPop)
         obtenerAlbum("rock", contenedorRock)
+
+        menuNavegacion()
+
     }
 
     //Metodo para poder cargar los albumes segun el genero y contenedor
@@ -66,7 +79,8 @@ class HomeActivity : AppCompatActivity() {
                     mostrarAlbumes(albumes, contenedor)
                     tvEstado.text = "Catálogo cargado con éxito"
                 } else {
-                    Toast.makeText(this@HomeActivity, "No hay resultados", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@HomeActivity, "No hay resultados", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
@@ -107,7 +121,7 @@ class HomeActivity : AppCompatActivity() {
                 //Variable para verificar si el album tiene ID
                 val idAlbum = album.collectionName
 
-                if (idAlbum != null){
+                if (idAlbum != null) {
                     val intent = Intent(this@HomeActivity, AlbumDetailActivity::class.java)
 
                     intent.putExtra("ID_ALBUM", idAlbum)
@@ -127,4 +141,61 @@ class HomeActivity : AppCompatActivity() {
             contenedor.addView(vistaAlbum)
         }
     }
+
+    //Metodo para el funcionamiento del menu
+    private fun menuNavegacion() {
+        //Mostrar el elemento seleccionado
+        bottomNavigation.selectedItemId = R.id.nav_inicio
+
+        //Funcion de las opciones
+        bottomNavigation.setOnItemSelectedListener { item ->
+
+            when (item.itemId) {
+                R.id.nav_inicio -> {
+                    //True para indicar que el boton esta activo
+                    true
+                }
+
+                R.id.nav_favoritos -> {
+                    val intent = Intent(this, FavoritesActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+
+                R.id.nav_salir -> {
+                    cerrarSesionGoogle()
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+    }
+
+    //Metodo para cerrar sesion
+    private fun cerrarSesionGoogle() {
+        auth.signOut()
+
+        lifecycleScope.launch {
+
+            try {
+
+                //Limpiar las credenciales del usuario
+                credentialManager.clearCredentialState(
+                    androidx.credentials.ClearCredentialStateRequest()
+                )
+
+            } catch (e: Exception) {
+                Toast.makeText(this@HomeActivity, "Error: ${e.toString()}", Toast.LENGTH_SHORT).show()
+            }
+
+            val intent = Intent(this@HomeActivity, MainActivity::class.java)
+
+            //Limpiar toda la información e iniciar la pantalla totalmente desde cero
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+    }
+
 }
