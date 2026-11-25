@@ -8,6 +8,9 @@ on:
 
 jobs:
   sincronizar_panda:
+    # Solo corre en Music_app; si este archivo llega al repo Music_app_panda
+    # (se copia con el push), el job se omite y no genera checks en rojo allí
+    if: github.repository == 'SPECTRUM00-prog/Music_app'
     runs-on: ubuntu-latest
     steps:
       - name: Descargar código de Music_app
