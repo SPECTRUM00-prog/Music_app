@@ -2,7 +2,9 @@ package com.example.music_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.music_app.model.AlbumFavorito
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -43,12 +46,13 @@ class FavoritesActivity : AppCompatActivity() {
 
         // Llamar a la función del menú
         menuNavegacion()
+        consultarFavoritos()
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    }
+
+    //Metodo para mostrar los cambios en la BD en tiempo real
+    override fun onResume() {
+        super.onResume()
     }
 
     // Metodo para el funcionamiento del menu
@@ -116,7 +120,53 @@ class FavoritesActivity : AppCompatActivity() {
                 false
             )
 
+            //Obtener la imagen del cuadrado creado antes
+            val imgAlbum = vistaAlbum.findViewById<ImageView>(R.id.imgFavoritoAlbum)
+
+            //Mostrar Imagen
+            Glide.with(this)
+                .load(album.imagen)
+                .centerCrop()
+                .into(imgAlbum)
+
+            vistaAlbum.setOnClickListener {
+
+                val intent = Intent(this, AlbumDetailActivity::class.java)
+
+                intent.putExtra("ID_ALBUM", album.albumId)
+                intent.putExtra("NOMBRE_ALBUM", album.nombreAlbum)
+                intent.putExtra("ARTISTA_ALBUM", album.artista)
+                intent.putExtra("GENERO_ALBUM", album.genero)
+                intent.putExtra("CANCIONES_ALBUM", album.canciones ?: 0)
+                intent.putExtra("FECHA_ALBUM", album.fecha)
+                intent.putExtra("IMAGEN_ALBUM", album.imagen)
+
+                startActivity(intent)
+            }
+
+            //Agregar las cartas
+            gridFavoritos.addView(vistaAlbum)
+
         }
+    }
+
+    //Metodo para consultar en la BD
+    private fun consultarFavoritos() {
+
+        val favoritos = dbHelper.obtenerAlbumesFavoritos()
+
+        //Eliminar vistas duplicadas en caso de exister
+        gridFavoritos.removeAllViews()
+
+        //Validar si la consulta devuelve algo
+        if (favoritos.isEmpty()) {
+            tvEstado.text = "No tiene ningun album como favorito :("
+            tvEstado.visibility = View.VISIBLE
+        } else {
+            tvEstado.visibility = View.GONE
+            mostrarAlbumFavoritos(favoritos)
+        }
+
     }
 
 }
