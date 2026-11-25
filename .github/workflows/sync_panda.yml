@@ -10,7 +10,7 @@ jobs:
   sincronizar_panda:
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar codigo de Music_app
+      - name: Descargar código de Music_app
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -19,18 +19,34 @@ jobs:
       - name: Aplicar configuraciones de Panda (Gradle 8.11.1 y AGP 8.9.0)
         run: |
           # 1. Cambiar la versión de Gradle en gradle-wrapper.properties a 8.11.1
-          sed -i 's|distributionUrl=.*|distributionUrl=https\\://services.gradle.org/distributions/gradle-8.11.1-bin.zip|' gradle/wrapper/gradle-wrapper.properties
+          sed -i 's|distributionUrl=.*|distributionUrl=https\://services.gradle.org/distributions/gradle-8.11.1-bin.zip|' gradle/wrapper/gradle-wrapper.properties
+          # Por si el wrapper trae un checksum fijado de otra versión de Gradle
+          sed -i 's|^distributionSha256Sum|#distributionSha256Sum|' gradle/wrapper/gradle-wrapper.properties
 
           # 2. Cambiar la versión del AGP en libs.versions.toml a 8.9.0
           sed -i 's|agp = "[^"]*"|agp = "8.9.0"|' gradle/libs.versions.toml
+
+          # 3. compileSdk: el bloque nuevo de AGP 9 no existe en AGP 8.x
+          #    compileSdk { version = release(37) }  ->  compileSdk = 37
+          sed -i '/compileSdk {/,/}/c\    compileSdk = 37' app/build.gradle.kts
+
+          # 4. optimization { } es DSL de AGP 9; AGP 8.x usa isMinifyEnabled + proguardFiles
+          sed -i '/optimization {/,/}/c\            isMinifyEnabled = true\n            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")' app/build.gradle.kts
+
+          # 5. AGP 8.x NO trae Kotlin integrado (AGP 9 sí): hay que añadir el plugin de Kotlin
+          #    2.2.21 está probada para Gradle 8.11.1 y AGP 8.9.0
+          sed -i 's|alias(libs.plugins.android.application)|alias(libs.plugins.android.application)\n    id("org.jetbrains.kotlin.android") version "2.2.21"|' app/build.gradle.kts
+
+          # 6. AGP 8.9 fue probado hasta compileSdk 36; se silencia el aviso por usar 37
+          grep -q "android.suppressUnsupportedCompileSdk" gradle.properties || echo "android.suppressUnsupportedCompileSdk=37" >> gradle.properties
 
       - name: Guardar cambios locales
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add gradle/wrapper/gradle-wrapper.properties gradle/libs.versions.toml
+          git add gradle/wrapper/gradle-wrapper.properties gradle/libs.versions.toml gradle.properties app/build.gradle.kts
           git commit -m "Auto-sync: Ajuste a Gradle 8.11.1 y AGP 8.9.0 (Panda)" || echo "Sin cambios pendientes"
 
-      - name: Enviar codigo actualizado a Music_app_panda
+      - name: Enviar código actualizado a Music_app_panda
         run: |
-          git push --force https://SPECTRUM00-prog:${{ secrets.SYNC_TOKEN }}@github.com/SPECTRUM00-prog/Music_app_panda.git HEAD:main
+          git push --force https://SPECTRUM00-prog:${{ secrets.SYNC_TOKEN }}@github.com/SPECTRUM00-prog/Music_app_panda.git HEAD:main 
