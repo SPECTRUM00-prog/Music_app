@@ -2,6 +2,8 @@ package com.example.music_app
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.GridLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.lifecycle.lifecycleScope
+import com.example.music_app.model.AlbumFavorito
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -20,6 +23,12 @@ class FavoritesActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var credentialManager: CredentialManager
 
+    private lateinit var gridFavoritos: GridLayout
+
+    private lateinit var tvEstado: TextView
+
+    private lateinit var dbHelper: DatabaseHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,6 +37,9 @@ class FavoritesActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottomNavigation)
         auth = FirebaseAuth.getInstance()
         credentialManager = CredentialManager.create(this)
+        gridFavoritos = findViewById(R.id.GridFavoritos)
+        tvEstado = findViewById(R.id.tvEstado)
+        dbHelper = DatabaseHelper(this)
 
         // Llamar a la función del menú
         menuNavegacion()
@@ -81,7 +93,8 @@ class FavoritesActivity : AppCompatActivity() {
                     ClearCredentialStateRequest()
                 )
             } catch (e: Exception) {
-                Toast.makeText(this@FavoritesActivity, "Error: ${e.toString()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@FavoritesActivity, "Error: ${e.toString()}", Toast.LENGTH_SHORT)
+                    .show()
             }
 
             val intent = Intent(this@FavoritesActivity, MainActivity::class.java)
@@ -91,4 +104,19 @@ class FavoritesActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    //Metodo para consultar la informacion de la base de datos
+    private fun mostrarAlbumFavoritos(favoritos: List<AlbumFavorito>) {
+        //Ciclo para recorrer la lista
+        for (album in favoritos) {
+
+            val vistaAlbum = layoutInflater.inflate(
+                R.layout.item_album_favorito,
+                gridFavoritos,
+                false
+            )
+
+        }
+    }
+
 }
